@@ -13,15 +13,16 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as PhotographyIdImport } from './routes/photography.$id'
 
 // Create Virtual Routes
 
 const SoftwareLazyImport = createFileRoute('/software')()
 const BlogLazyImport = createFileRoute('/blog')()
+const BiotechLazyImport = createFileRoute('/biotech')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 const PhotographyIndexLazyImport = createFileRoute('/photography/')()
+const PhotographyIdLazyImport = createFileRoute('/photography/$id')()
 
 // Create/Update Routes
 
@@ -34,6 +35,11 @@ const BlogLazyRoute = BlogLazyImport.update({
   path: '/blog',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/blog.lazy').then((d) => d.Route))
+
+const BiotechLazyRoute = BiotechLazyImport.update({
+  path: '/biotech',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/biotech.lazy').then((d) => d.Route))
 
 const AboutLazyRoute = AboutLazyImport.update({
   path: '/about',
@@ -52,7 +58,7 @@ const PhotographyIndexLazyRoute = PhotographyIndexLazyImport.update({
   import('./routes/photography.index.lazy').then((d) => d.Route),
 )
 
-const PhotographyIdRoute = PhotographyIdImport.update({
+const PhotographyIdLazyRoute = PhotographyIdLazyImport.update({
   path: '/photography/$id',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
@@ -71,6 +77,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutLazyImport
       parentRoute: typeof rootRoute
     }
+    '/biotech': {
+      preLoaderRoute: typeof BiotechLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/blog': {
       preLoaderRoute: typeof BlogLazyImport
       parentRoute: typeof rootRoute
@@ -80,7 +90,7 @@ declare module '@tanstack/react-router' {
       parentRoute: typeof rootRoute
     }
     '/photography/$id': {
-      preLoaderRoute: typeof PhotographyIdImport
+      preLoaderRoute: typeof PhotographyIdLazyImport
       parentRoute: typeof rootRoute
     }
     '/photography/': {
@@ -95,9 +105,10 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   AboutLazyRoute,
+  BiotechLazyRoute,
   BlogLazyRoute,
   SoftwareLazyRoute,
-  PhotographyIdRoute,
+  PhotographyIdLazyRoute,
   PhotographyIndexLazyRoute,
 ])
 
