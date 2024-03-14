@@ -60,43 +60,41 @@ export default function IndexGame() {
           <CardTitle>Guess the animal</CardTitle>
         </CardHeader>
         <CardContent>
-          {!message && (
-            <Form {...form}>
-              <form onSubmit={onSubmit}>
-                <FormField
-                  control={form.control}
-                  name='animal'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Animal</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        Please enter the cutest animal you can think of
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type='submit'
-                  className='mt-4'>
-                  Submit
-                </Button>
-              </form>
-            </Form>
-          )}
-          {message && (
-            <>
-              <p>{message}</p>
+          <Form {...form}>
+            <form
+              onSubmit={onSubmit}
+              className={message ? "hidden" : ""}>
+              <FormField
+                control={form.control}
+                name='animal'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Animal</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Please enter the cutest animal you can think of
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Button
-                onClick={() => setMessage("")}
+                type='submit'
                 className='mt-4'>
-                Play again
+                Submit
               </Button>
-            </>
-          )}
+            </form>
+          </Form>
+          <div className={message ? "" : "hidden"}>
+            <p>{message}</p>
+            <Button
+              onClick={() => setMessage("")}
+              className='mt-4'>
+              Play again
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
