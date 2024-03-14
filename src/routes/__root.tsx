@@ -8,7 +8,6 @@ import "../assets/index.css"
 import { Button } from "@/components/ui/button"
 import { createHead } from "unhead"
 import Header from "@/components/Header"
-import { Toaster } from "@/components/ui/toaster"
 
 // Create a global head instance
 //@ts-expect-error - head is never used
@@ -121,7 +120,6 @@ function Root() {
           </div>
         </div>
       </footer>
-      <Toaster />
       <Suspense>
         <TanStackRouterDevtools />
       </Suspense>

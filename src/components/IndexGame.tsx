@@ -10,8 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -22,7 +22,8 @@ const schema = z.object({
 })
 
 export default function IndexGame() {
-  const { toast } = useToast()
+  const [message, setMessage] = useState("")
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -33,24 +34,23 @@ export default function IndexGame() {
   const onSubmit = form.handleSubmit((values) => {
     const animal = values.animal.toLowerCase()
 
-    const message =
-      animal.includes("cat") || animal.includes("kitten")
-        ? "🎉🎉🎉 You guessed it! Meow! 🎉🎉🎉"
-        : animal.includes("dog")
-          ? "Close, but no cigar!"
-          : animal.includes("dolphin")
-            ? "Great guess, but no, equally playful though!"
-            : animal.includes("shark")
-              ? "No, but they're both predators"
-              : animal.includes("hamster") ||
-                  animal.includes("guinea pig") ||
-                  animal.includes("rabbit")
-                ? "No, but they're both small and cute"
-                : "Try again!"
-
-    toast({
-      description: message,
-    })
+    if (animal.includes("cat") || animal.includes("kitten")) {
+      setMessage("🎉🎉🎉 You guessed it! Meow! 🎉🎉🎉")
+    } else if (animal.includes("dog")) {
+      setMessage("Close, but no cigar!")
+    } else if (animal.includes("dolphin")) {
+      setMessage("Great guess, but no, equally playful though!")
+    } else if (animal.includes("shark")) {
+      setMessage("No, but they're both predators")
+    } else if (
+      animal.includes("hamster") ||
+      animal.includes("guinea pig") ||
+      animal.includes("rabbit")
+    ) {
+      setMessage("No, but they're both small and cute")
+    } else {
+      setMessage("Try again!")
+    }
   })
 
   return (
@@ -85,6 +85,7 @@ export default function IndexGame() {
               </Button>
             </form>
           </Form>
+          {message && <p className='mt-6 font-bold text-center'>{message}</p>}
         </CardContent>
       </Card>
     </div>
