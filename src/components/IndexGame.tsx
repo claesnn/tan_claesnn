@@ -60,32 +60,43 @@ export default function IndexGame() {
           <CardTitle>Guess the animal</CardTitle>
         </CardHeader>
         <CardContent>
-          <Form {...form}>
-            <form onSubmit={onSubmit}>
-              <FormField
-                control={form.control}
-                name='animal'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Animal</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Please enter the cutest animal you can think of
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+          {!message && (
+            <Form {...form}>
+              <form onSubmit={onSubmit}>
+                <FormField
+                  control={form.control}
+                  name='animal'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Animal</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        Please enter the cutest animal you can think of
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type='submit'
+                  className='mt-4'>
+                  Submit
+                </Button>
+              </form>
+            </Form>
+          )}
+          {message && (
+            <>
+              <p>{message}</p>
               <Button
-                type='submit'
+                onClick={() => setMessage("")}
                 className='mt-4'>
-                Submit
+                Play again
               </Button>
-            </form>
-          </Form>
-          {message && <p className='mt-6 font-bold text-center'>{message}</p>}
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
