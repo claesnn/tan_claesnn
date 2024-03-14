@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 docker build -t front-next .
 docker tag front-prod front-prev
 docker tag front-next front-prod
