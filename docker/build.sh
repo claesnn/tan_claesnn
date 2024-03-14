@@ -1,1 +1,1 @@
-docker build -t front-next .
+docker build -t front-next ../
