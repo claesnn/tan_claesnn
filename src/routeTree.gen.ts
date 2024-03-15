@@ -13,15 +13,16 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as BlogIdImport } from './routes/blog.$id'
 
 // Create Virtual Routes
 
 const SoftwareLazyImport = createFileRoute('/software')()
-const BlogLazyImport = createFileRoute('/blog')()
 const BiotechLazyImport = createFileRoute('/biotech')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 const PhotographyIndexLazyImport = createFileRoute('/photography/')()
+const BlogIndexLazyImport = createFileRoute('/blog/')()
 const PhotographyIdLazyImport = createFileRoute('/photography/$id')()
 
 // Create/Update Routes
@@ -30,11 +31,6 @@ const SoftwareLazyRoute = SoftwareLazyImport.update({
   path: '/software',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/software.lazy').then((d) => d.Route))
-
-const BlogLazyRoute = BlogLazyImport.update({
-  path: '/blog',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/blog.lazy').then((d) => d.Route))
 
 const BiotechLazyRoute = BiotechLazyImport.update({
   path: '/biotech',
@@ -58,12 +54,22 @@ const PhotographyIndexLazyRoute = PhotographyIndexLazyImport.update({
   import('./routes/photography.index.lazy').then((d) => d.Route),
 )
 
+const BlogIndexLazyRoute = BlogIndexLazyImport.update({
+  path: '/blog/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/blog.index.lazy').then((d) => d.Route))
+
 const PhotographyIdLazyRoute = PhotographyIdLazyImport.update({
   path: '/photography/$id',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/photography.$id.lazy').then((d) => d.Route),
 )
+
+const BlogIdRoute = BlogIdImport.update({
+  path: '/blog/$id',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/blog.$id.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -81,16 +87,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BiotechLazyImport
       parentRoute: typeof rootRoute
     }
-    '/blog': {
-      preLoaderRoute: typeof BlogLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/software': {
       preLoaderRoute: typeof SoftwareLazyImport
       parentRoute: typeof rootRoute
     }
+    '/blog/$id': {
+      preLoaderRoute: typeof BlogIdImport
+      parentRoute: typeof rootRoute
+    }
     '/photography/$id': {
       preLoaderRoute: typeof PhotographyIdLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/blog/': {
+      preLoaderRoute: typeof BlogIndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/photography/': {
@@ -106,9 +116,10 @@ export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   AboutLazyRoute,
   BiotechLazyRoute,
-  BlogLazyRoute,
   SoftwareLazyRoute,
+  BlogIdRoute,
   PhotographyIdLazyRoute,
+  BlogIndexLazyRoute,
   PhotographyIndexLazyRoute,
 ])
 

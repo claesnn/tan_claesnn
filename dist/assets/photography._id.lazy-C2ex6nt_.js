@@ -1,1 +1,0 @@
-import{c as t,j as e}from"./index-rfYB-Yj3.js";const a=t("/photography/$id")({component:o});function o(){const{id:s}=a.useParams();return e.jsx("div",{className:"flex justify-center",children:e.jsx("img",{src:`/images/${s}-1280.webp`,className:"max-h-screen"})})}export{a as Route};

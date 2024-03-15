@@ -8,6 +8,7 @@ import "../assets/index.css"
 import { Button } from "@/components/ui/button"
 import { createHead } from "unhead"
 import Header from "@/components/Header"
+import { CodeXml } from "lucide-react"
 
 // Create a global head instance
 //@ts-expect-error - head is never used
@@ -38,7 +39,12 @@ function Root() {
       </div>
       <footer className='border-t mt-10'>
         <div className='flex px-4 py-2 justify-between place-items-center max-w-7xl mx-auto'>
-          <p>Made with 💗 by Claes</p>
+          <a href='https://github.com/claesnn/tan_claesnn'>
+            <p className='flex place-items-center text-sm'>
+              <CodeXml className='mr-2' />
+              Check out source code
+            </p>
+          </a>
           <div>
             <a href='https://github.com/claesnn'>
               <Button variant='ghost'>
