@@ -1,4 +1,4 @@
-FROM node:20-alpine as stage
+FROM node:20-alpine as build
 
 COPY package.json .
 
