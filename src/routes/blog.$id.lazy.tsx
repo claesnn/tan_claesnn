@@ -1,14 +1,17 @@
-import { createLazyFileRoute } from "@tanstack/react-router"
-import Markdown from "react-markdown"
-
-//TODO: Use a markdown library that enables loading title and header
+import { createLazyFileRoute } from "@tanstack/react-router";
+import Markdown from "react-markdown";
+import "@/assets/markdown.css";
 
 export const Route = createLazyFileRoute("/blog/$id")({
   component: BlogDetail,
-})
+});
 
 function BlogDetail() {
-  const data = Route.useLoaderData()
+  const data = Route.useLoaderData();
 
-  return <Markdown>{data}</Markdown>
+  return (
+    <>
+      <Markdown className="markdown">{data}</Markdown>
+    </>
+  );
 }

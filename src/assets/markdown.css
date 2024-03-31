@@ -1,0 +1,20 @@
+.markdown h1 {
+    font-size: x-large;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.markdown h2 {
+    font-size: large;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.markdown h1, .markdown h2 {
+    font-weight: 700;
+}
+
+.markdown p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
