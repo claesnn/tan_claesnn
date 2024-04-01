@@ -1,4 +1,6 @@
-type Category = "Javascript" | "Python" | "Photography"
+export const categories = ["Javascript", "Python", "Photography"] as const
+
+type Category = typeof categories[number]
 
 type Blog = {
   title: string

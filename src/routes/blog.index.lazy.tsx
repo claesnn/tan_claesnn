@@ -1,5 +1,5 @@
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
-import { blogs } from "@/assets/blogData";
+import { blogs, categories } from "@/assets/blogData";
 import { useState } from "react";
 import {
   Select,
@@ -49,15 +49,16 @@ function Blog() {
       </ul>
 
       <div className="md:w-80 md:ml-6">
-        <h2 className="font-bold mb-2 text-slate-600">FILTER BLOGS</h2>
+        <h2 className="text-sm mb-2 text-slate-600 tracking-wider">FILTERS</h2>
         <div className="flex space-x-2">
           <Select value={category} onValueChange={setCategory}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Category" className="w-full" />
             </SelectTrigger>
             <SelectContent className="w-full">
-              <SelectItem value="Javascript">JavaScript</SelectItem>
-              <SelectItem value="Python">Python</SelectItem>
+              {categories.map((category) => (
+                <SelectItem value={category}>{category}</SelectItem>
+              ))}
             </SelectContent>
           </Select>
           {category && <Button onClick={() => setCategory("")}>Reset</Button>}
