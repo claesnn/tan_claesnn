@@ -169,24 +169,25 @@ function Index() {
   });
   return (
     <>
+      {/* INTRO */}
       <IndexIntro />
 
+      {/* PHOTOS */}
       <hr className="mt-10 mb-5"></hr>
-
       <Link to="/photography">
         <h1 className="font-[Kurale] text-4xl mb-4">Photography</h1>
       </Link>
       <IndexPhotos />
 
+      {/* SOFTWARE */}
       <hr className="mt-10 mb-5"></hr>
-
       <Link to="/software">
         <h1 className="font-[Kurale] text-4xl mb-4">Software</h1>
       </Link>
       <IndexGame />
 
+      {/* BIOTECH */}
       <hr className="mt-10 mb-5"></hr>
-
       <Link to="/biotech">
         <h1 className="font-[Kurale] text-4xl mb-4">Biotech</h1>
       </Link>

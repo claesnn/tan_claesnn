@@ -9,29 +9,38 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { LucideArrowDown, LucideArrowUp } from "lucide-react";
 
 export const Route = createLazyFileRoute("/blog/")({
   component: Blog,
 });
 
-// Implement sorting / filtering / pagination
-
 function Blog() {
   const [category, setCategory] = useState("");
+  const [sorted, setSorted] = useState(true);
 
   function formatDate(input: string) {
     const date = new Date(input);
     return date.toLocaleDateString("en-US", { day: "numeric", month: "short" });
   }
 
+  // Filter blogs by category
   const filteredBlogs = category
     ? blogs.filter((blog) => blog.category === category)
     : blogs;
 
+  // Sort blogs
+  const multiplier = sorted ? 1 : -1;
+  const sortedBlogs = filteredBlogs.sort(
+    (a, b) => (Date.parse(a.date) - Date.parse(b.date)) * multiplier
+  );
+
   return (
     <div className="mt-5 md:flex">
       <ul className="w-full">
-        {filteredBlogs.map((blog) => (
+        {/* Show blogs */}
+
+        {sortedBlogs.map((blog) => (
           <li key={blog.slug}>
             <Link to="/blog/$id" params={{ id: blog.slug }}>
               <span className="text-slate-500 mr-3 text-xs uppercase">
@@ -48,9 +57,26 @@ function Blog() {
         ))}
       </ul>
 
+      {/* Filters Control */}
       <div className="md:w-80 md:ml-6">
         <h2 className="text-sm mb-2 text-slate-600 tracking-wider">FILTERS</h2>
-        <div className="flex space-x-2">
+        <div className="space-y-3">
+          {/* Sorting */}
+
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() => setSorted(!sorted)}
+          >
+            <span className="mr-2">Sort</span>{" "}
+            {sorted ? (
+              <LucideArrowDown size={16} />
+            ) : (
+              <LucideArrowUp size={16} />
+            )}
+          </Button>
+
+          {/* Filter by Category */}
           <Select value={category} onValueChange={setCategory}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Category" className="w-full" />
@@ -61,7 +87,20 @@ function Blog() {
               ))}
             </SelectContent>
           </Select>
-          {category && <Button onClick={() => setCategory("")}>Reset</Button>}
+
+          {/* Reset filters */}
+          {category && (
+            <Button
+              className="w-full"
+              variant="outline"
+              onClick={() => {
+                setCategory("");
+                setSorted(true);
+              }}
+            >
+              Reset
+            </Button>
+          )}
         </div>
       </div>
     </div>
